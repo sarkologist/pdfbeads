@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('nokogiri')
   s.add_runtime_dependency('iconv')
   s.add_runtime_dependency('rmagick')
+  s.add_runtime_dependency('parallel')
 
   s.extra_rdoc_files = %w( README COPYING ChangeLog )
 

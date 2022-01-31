@@ -30,6 +30,8 @@
 #
 #######################################################################
 
+require 'parallel'
+
 # Represents a set of page images accompanies with auxiliary files
 # needed to build a PDF document.
 class PDFBeads::PageDataProvider < Array
@@ -412,15 +414,17 @@ class PDFBeads::PageDataProvider < Array
       @pref = Array.new( ext_jpeg ) if @pref.include? 'JP2'
     end
 
-    for fname in files do
+    Parallel.map(files) do |fname|
       if /\A([^.]*)\.(TIFF?|PNG)\Z/i.match( fname )
         page = PageData.new( fname,$1,args,@exts,@pref )
         scnt = page.fillStencilArray()
         if scnt > 0
           page.addSupplementaryFiles()
-          push( page )
+          page
         end
       end
+    end.select{|x| !x.nil?}.each do |p|
+      push(p)
     end
   end
 

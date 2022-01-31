@@ -33,6 +33,7 @@
 
 require 'time'
 require 'stringio'
+require 'parallel'
 
 # The key class where the actual generation of a PDF file is performed.
 class PDFBeads::PDFBuilder
